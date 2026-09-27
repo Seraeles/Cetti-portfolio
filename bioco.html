@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roderick A. Bioco - Portfolio</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            background: 
+                radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(rgba(0, 32, 91, 0.85), rgba(0, 32, 91, 0.85)), 
+                url('xuadc.jpg') no-repeat center center fixed;
+            background-size: 20px 20px, cover, cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Back to Home Button */
+        .back-btn {
+            position: absolute;
+            top: 25px;
+            left: 30px;
+            font-family: 'Raleway', sans-serif;
+            text-decoration: none;
+            color: #E6C687;
+            background-color: rgba(10, 45, 110, 0.7);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .back-btn:hover {
+            background-color: rgba(20, 70, 160, 0.9);
+            border-color: rgba(212, 175, 55, 0.9);
+            transform: translateY(-2px);
+        }
+
+        /* Portfolio Document Container - 90% White with a 5% hint of Gold & Blue tint */
+        .portfolio-card {
+            background: linear-gradient(145deg, 
+                rgba(255, 255, 255, 0.97) 0%, 
+                rgba(238, 243, 252, 0.95) 70%, 
+                rgba(252, 248, 235, 0.95) 100%
+            );
+            max-width: 800px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            border-top: 5px solid #D4AF37;
+            position: relative;
+        }
+
+        /* Customized clean scrollbar */
+        .portfolio-card::-webkit-scrollbar {
+            width: 8px;
+        }
+        .portfolio-card::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 4px;
+        }
+        .portfolio-card::-webkit-scrollbar-thumb {
+            background: rgba(0, 32, 91, 0.25);
+            border-radius: 4px;
+        }
+        .portfolio-card::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 32, 91, 0.4);
+        }
+
+        .profile-header {
+            border-bottom: 2px solid rgba(212, 175, 55, 0.25);
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+        }
+
+        .header-info h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: #00205B;
+            margin-bottom: 8px;
+        }
+
+        .meta-info {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1rem;
+            color: #334155;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* Profile Picture Style for CV */
+        .profile-img {
+            width: 140px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 3px solid #D4AF37;
+            box-shadow: 0 4px 10px rgba(0, 32, 91, 0.15);
+        }
+
+        .cv-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Tab Content States */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Bio Content */
+        .bio-content {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.02rem;
+            color: #1e293b;
+            line-height: 1.8;
+            padding-bottom: 30px;
+        }
+
+        .bio-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+            text-indent: 30px;
+        }
+
+        .bio-content strong {
+            color: #00205B;
+        }
+
+        .cv-section-title {
+            font-family: 'Cinzel', serif;
+            color: #00205B;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 32, 91, 0.2);
+            padding-bottom: 5px;
+        }
+
+        /* Sticky Bottom-Right Floating Tabs Wrapper inside the card */
+        .tabs-wrapper {
+            position: sticky;
+            bottom: 0px;
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -20px;
+            padding-top: 15px;
+            padding-bottom: 10px;
+            background: linear-gradient(to top, rgba(240, 245, 253, 0.98) 70%, rgba(240, 245, 253, 0));
+            z-index: 5;
+        }
+
+        .tabs-container {
+            display: flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 6px;
+            border-radius: 8px;
+            box-shadow: 0 -4px 15px rgba(0, 32, 91, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        .tab-btn {
+            font-family: 'Raleway', sans-serif;
+            background-color: #f1f3f5;
+            color: #00205B;
+            border: 1px solid #cbd5e1;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .tab-btn:hover {
+            background-color: #e2e8f0;
+            border-color: #00205B;
+            transform: translateY(-1px);
+        }
+
+        .tab-btn.active {
+            background-color: #00205B;
+            color: #D4AF37;
+            border-color: #D4AF37;
+            box-shadow: 0 4px 10px rgba(0, 32, 91, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn">&#8592; Back to Group</a>
+
+    <div class="portfolio-card">
+        <div class="profile-header">
+            <div class="header-info">
+                <h1>Roderick A. Bioco</h1>
+                <div class="meta-info">
+                    12 - Cetti | STEM Strand<br>
+                    Xavier University Senior High School
+                </div>
+            </div>
+        </div>
+
+        <!-- Bionote Tab Content (Default View) -->
+        <div id="bionote" class="tab-content active">
+            <div class="bio-content">
+                <h2 style="font-family: 'Cinzel', serif; color: #00205B; margin-bottom: 20px; text-align: center;">Maikling Bionote</h2>
+                <p>
+                    Si <strong>Roderick A. Bioco</strong> ay isang mag-aaral sa Senior High School na kasalukuyang kumukuha ng STEM strand sa <strong>Xavier University Senior High School</strong>. Ipinagpapatuloy niya ang kanyang pag-aaral habang aktibong nakikilahok sa mga gawaing pampaaralan at organisasyon.
+                </p>
+                <p>
+                    Mula Grade 11 hanggang sa kasalukuyang Grade 12, naging miyembro siya ng <strong>Esports Club</strong>, kung saan nagsisilbi siyang aktibong miyembro at facilitator sa mga laro at gawain ng organisasyon. Lumahok din siya sa <strong>Navigate Leadership Workshop</strong> at nakatanggap ng Certificate of Participation. Sa pamamagitan ng mga karanasan ito, nahubog ang kanyang kasanayan sa pamumuno, pakikipagtulungan, pakikipagkomunikasyon, at pag-oorganisa ng mga gawain.
+                </p>
+            </div>
+        </div>
+
+        <!-- Curriculum Vitae Tab Content (With Profile Picture) -->
+        <div id="cv" class="tab-content">
+            <div class="bio-content">
+                <div class="cv-header">
+                    <div>
+                        <h2 style="font-family: 'Cinzel', serif; color: #00205B; margin-bottom: 5px; text-align: left;">Curriculum Vitae</h2>
+                        <p style="text-indent: 0; margin-bottom: 5px;"><strong>Roderick A. Bioco</strong></p>
+                        <p style="text-indent: 0; margin-bottom: 0; font-size: 0.95rem; color: #555;">Xavier University Senior High School - STEM Strand</p>
+                    </div>
+                    <!-- Profile Picture -->
+                    <img src="bioco.jpg" alt="Roderick A. Bioco" class="profile-img">
+                </div>
+
+                <div class="cv-section-title">Education</div>
+                <p style="text-indent: 0; margin-bottom: 10px;">
+                    <strong>Senior High School:</strong> Xavier University Senior High School (STEM Strand)<br>
+                    <strong>Junior High School / Elementary:</strong> Xavier University - Ateneo de Cagayan
+                </p>
+
+                <div class="cv-section-title">Extracurricular Activities & Organizations</div>
+                <p style="text-indent: 0; margin-bottom: 10px;">
+                    • <strong>Esports Club</strong> - Active Member & Facilitator (Grade 11 - Grade 12)<br>
+                    • <strong>Navigate Leadership Workshop</strong> - Participant (Certificate Holder)
+                </p>
+
+                <div class="cv-section-title">Skills & Competencies</div>
+                <p style="text-indent: 0; margin-bottom: 10px;">
+                    • Leadership & Team Collaboration<br>
+                    • Communication & Event Organizing<br>
+                    • Strategic Planning & Facilitation
+                </p>
+            </div>
+        </div>
+
+        <!-- Sticky Bottom-Right Floating Tabs Wrapper inside the card -->
+        <div class="tabs-wrapper">
+            <div class="tabs-container">
+                <button class="tab-btn active" onclick="switchTab(event, 'bionote')">Bionote</button>
+                <button class="tab-btn" onclick="switchTab(event, 'cv')">Curriculum Vitae</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript to handle tab switching seamlessly -->
+    <script>
+        function switchTab(evt, tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+            
+            document.querySelector('.portfolio-card').scrollTop = 0;
+        }
+    </script>
+
+</body>
+</html>
